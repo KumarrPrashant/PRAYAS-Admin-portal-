@@ -1,0 +1,213 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Updated color tokens to match modern design brief with cyan-based palette */
+  --background: #ffffff; /* White background */
+  --foreground: #475569; /* Dark cyan text */
+  --card: #ecfeff; /* Light cyan card background */
+  --card-foreground: #374151; /* Card text color */
+  --popover: #ffffff; /* White popover */
+  --popover-foreground: #164e63; /* Cyan-800 popover text */
+  --primary: #164e63; /* Cyan-800 primary */
+  --primary-foreground: #ffffff; /* White text on primary */
+  --secondary: #f97316; /* Vibrant orange secondary */
+  --secondary-foreground: #ffffff; /* White text on secondary */
+  --muted: #f8fafc; /* Muted background */
+  --muted-foreground: #4b5563; /* Muted text color */
+  --accent: #f97316; /* Vibrant orange accent */
+  --accent-foreground: #ffffff; /* White accent text */
+  --destructive: #e3342f; /* Red destructive */
+  --destructive-foreground: #ffffff; /* White destructive text */
+  --border: #d1d5db; /* Light border */
+  --input: #ffffff; /* White input background */
+  --ring: rgba(22, 78, 99, 0.2); /* Cyan ring with transparency */
+  --chart-1: #3b82f6; /* Blue chart color */
+  --chart-2: #10b981; /* Green chart color */
+  --chart-3: #fbbf24; /* Yellow chart color */
+  --chart-4: #ef4444; /* Red chart color */
+  --chart-5: #6366f1; /* Indigo chart color */
+  --radius: 0.5rem;
+  --sidebar: #f8fafc; /* Light sidebar background */
+  --sidebar-foreground: #374151; /* Sidebar text color */
+  --sidebar-primary: #164e63; /* Cyan-800 sidebar primary */
+  --sidebar-primary-foreground: #ffffff; /* White sidebar primary text */
+  --sidebar-accent: #f97316; /* Orange sidebar accent */
+  --sidebar-accent-foreground: #ffffff; /* White sidebar accent text */
+  --sidebar-border: #d1d5db; /* Light sidebar border */
+  --sidebar-ring: rgba(22, 78, 99, 0.1); /* Cyan sidebar ring */
+
+  /* Added custom colors for enhanced modern theme */
+  --cyan-800: #164e63;
+  --cyan-50: #ecfeff;
+  --orange-500: #f97316;
+  --slate-600: #475569;
+}
+
+.dark {
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  --card: #1e293b;
+  --card-foreground: #f1f5f9;
+  --popover: #1e293b;
+  --popover-foreground: #f1f5f9;
+  --primary: #0ea5e9;
+  --primary-foreground: #0f172a;
+  --secondary: #f97316;
+  --secondary-foreground: #ffffff;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #f97316;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #334155;
+  --input: #1e293b;
+  --ring: rgba(14, 165, 233, 0.3);
+  --chart-1: #3b82f6;
+  --chart-2: #10b981;
+  --chart-3: #fbbf24;
+  --chart-4: #ef4444;
+  --chart-5: #6366f1;
+  --sidebar: #0f172a;
+  --sidebar-foreground: #f1f5f9;
+  --sidebar-primary: #0ea5e9;
+  --sidebar-primary-foreground: #0f172a;
+  --sidebar-accent: #f97316;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #334155;
+  --sidebar-ring: rgba(14, 165, 233, 0.2);
+}
+
+/* Enhanced keyframes for smooth animations */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.marquee {
+  animation: marquee 25s linear infinite;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.6s ease-out;
+}
+
+/* Modern gradient utilities */
+.modern-gradient {
+  background: linear-gradient(135deg, #164e63 0%, #0ea5e9 50%, #f97316 100%);
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+@theme inline {
+  /* Added Playfair Display and Source Sans Pro fonts */
+  --font-sans: "Source Sans Pro", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Custom color utilities for modern theme */
+  --color-cyan-800: var(--cyan-800);
+  --color-cyan-50: var(--cyan-50);
+  --color-orange-500: var(--orange-500);
+  --color-slate-600: var(--slate-600);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif;
+  }
+}
