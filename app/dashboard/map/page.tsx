@@ -2,15 +2,14 @@
 
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { MapPin, Filter, Layers, ZoomIn, ZoomOut } from "lucide-react"
+import { Filter } from "lucide-react"
 import { useState } from "react"
+import { EnhancedMap } from "@/components/enhanced-map"
 
 export default function MapPage() {
   const [selectedFilter, setSelectedFilter] = useState<string>("all")
-  const [mapView, setMapView] = useState<"satellite" | "street">("street")
 
   const issueTypes = [
     { value: "all", label: "All Issues", color: "gray", count: 30 },
@@ -81,88 +80,9 @@ export default function MapPage() {
             </div>
 
             <div className="lg:col-span-3">
-              <Card className="animate-in slide-in-from-right-4 duration-500 delay-200">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center space-x-2">
-                      <MapPin className="w-5 h-5" />
-                      <span>Live Issue Map</span>
-                    </CardTitle>
-                    <div className="flex space-x-2">
-                      <Button
-                        variant={mapView === "street" ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => setMapView("street")}
-                      >
-                        <Layers className="w-4 h-4 mr-1" />
-                        Street
-                      </Button>
-                      <Button
-                        variant={mapView === "satellite" ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => setMapView("satellite")}
-                      >
-                        Satellite
-                      </Button>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-96 bg-gradient-to-br from-green-100 via-blue-50 to-green-100 rounded-lg relative overflow-hidden border-2 border-green-200">
-                    <div
-                      className={`absolute inset-0 rounded-lg transition-all duration-500 ${
-                        mapView === "satellite"
-                          ? "bg-gradient-to-br from-green-800 via-green-600 to-blue-800"
-                          : "bg-gradient-to-br from-green-200 via-blue-100 to-green-300"
-                      }`}
-                    >
-                      {/* Roads/Streets */}
-                      <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-400 opacity-60"></div>
-                      <div className="absolute top-0 bottom-0 left-1/2 w-1 bg-gray-400 opacity-60"></div>
-                      <div className="absolute top-1/4 left-1/4 right-1/4 h-0.5 bg-gray-400 opacity-40 rotate-45"></div>
-
-                      {/* Interactive issue markers */}
-                      <div className="absolute top-1/4 left-1/3 group cursor-pointer transform hover:scale-110 transition-transform">
-                        <div className="w-5 h-5 bg-red-500 rounded-full animate-pulse shadow-lg border-2 border-white"></div>
-                        <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
-                          Electricity Issue - High Priority
-                        </div>
-                      </div>
-
-                      <div className="absolute top-1/2 right-1/4 group cursor-pointer transform hover:scale-110 transition-transform">
-                        <div className="w-5 h-5 bg-orange-500 rounded-full animate-pulse shadow-lg border-2 border-white"></div>
-                        <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
-                          Pothole Issue - Medium Priority
-                        </div>
-                      </div>
-
-                      <div className="absolute bottom-1/3 left-1/2 group cursor-pointer transform hover:scale-110 transition-transform">
-                        <div className="w-5 h-5 bg-blue-500 rounded-full animate-pulse shadow-lg border-2 border-white"></div>
-                        <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
-                          Water Issue - Critical
-                        </div>
-                      </div>
-
-                      <div className="absolute top-3/4 right-1/3 group cursor-pointer transform hover:scale-110 transition-transform">
-                        <div className="w-5 h-5 bg-yellow-500 rounded-full animate-pulse shadow-lg border-2 border-white"></div>
-                        <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
-                          Street Light Issue - Low Priority
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Map controls */}
-                    <div className="absolute top-4 right-4 flex flex-col space-y-2 z-10">
-                      <Button size="sm" variant="secondary">
-                        <ZoomIn className="w-4 h-4" />
-                      </Button>
-                      <Button size="sm" variant="secondary">
-                        <ZoomOut className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="animate-in slide-in-from-right-4 duration-500 delay-200">
+                <EnhancedMap showHeatmap={true} />
+              </div>
             </div>
           </div>
         </div>

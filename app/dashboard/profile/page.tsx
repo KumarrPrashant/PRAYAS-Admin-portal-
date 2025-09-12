@@ -18,13 +18,13 @@ export default function ProfilePage() {
   const router = useRouter()
   const [isEditing, setIsEditing] = useState(false)
   const [profileData, setProfileData] = useState({
-    name: "Rajesh Kumar Singh",
-    email: "rajesh.singh@prayas.gov.in",
+    name: "Prerna Singh",
+    email: "prerna.singh@prayas.gov.in",
     phone: "+91 9876543210",
     department: "Municipal Corporation",
     designation: "Senior Administrative Officer",
     employeeId: "EMP001234",
-    address: "Block A, Secretariat Complex, New Delhi - 110001",
+    address: "Block A, Municipal Corporation Office, Raj Nagar, Ghaziabad - 201002",
     joinDate: "2020-03-15",
     bio: "Experienced administrative officer with 8+ years in municipal governance and civic issue resolution.",
   })

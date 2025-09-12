@@ -1,5 +1,5 @@
 import { DashboardLayout } from "@/components/dashboard-layout"
-import { TaskAssignmentDashboard } from "@/components/task-assignment-dashboard"
+import { AssignmentManagementEnhanced } from "@/components/assignment-management-enhanced"
 
 export default function AssignmentsPage() {
   return (
@@ -32,7 +32,7 @@ export default function AssignmentsPage() {
         </div>
 
         <div className="slide-in-right">
-          <TaskAssignmentDashboard />
+          <AssignmentManagementEnhanced />
         </div>
       </div>
     </DashboardLayout>

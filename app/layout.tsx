@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Playfair_Display, Source_Sans_3 as Source_Sans_Pro } from "next/font/google"
 import "./globals.css"
 import LoadingScreen from "@/components/loading-screen"
+import { ToastProvider } from "@/components/toast-provider"
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body>
         <LoadingScreen />
         {children}
+        <ToastProvider />
       </body>
     </html>
   )

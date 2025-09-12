@@ -1,5 +1,5 @@
 import { DashboardLayout } from "@/components/dashboard-layout"
-import { IssueManagement } from "@/components/issue-management"
+import { EnhancedIssueManagement } from "@/components/enhanced-issue-management"
 import PageTransition from "@/components/page-transition"
 
 export default function IssuesPage() {
@@ -34,7 +34,7 @@ export default function IssuesPage() {
           </div>
 
           <div className="slide-in-right">
-            <IssueManagement />
+            <EnhancedIssueManagement />
           </div>
         </div>
       </PageTransition>

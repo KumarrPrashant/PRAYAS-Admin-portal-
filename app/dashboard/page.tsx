@@ -1,8 +1,8 @@
 import { DashboardLayout } from "@/components/dashboard-layout"
-import { StatsCards } from "@/components/stats-cards"
 import { RecentIssues } from "@/components/recent-issues"
-import { IssueMap } from "@/components/issue-map"
 import { QuickActions } from "@/components/quick-actions"
+import { EnhancedMap } from "@/components/enhanced-map"
+import { DashboardStatsUpdater } from "@/components/dashboard-stats-updater"
 import PageTransition from "@/components/page-transition"
 
 export default function DashboardPage() {
@@ -45,7 +45,7 @@ export default function DashboardPage() {
             </div>
 
             <div className="slide-in-right">
-              <StatsCards />
+              <DashboardStatsUpdater />
             </div>
 
             <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
@@ -57,7 +57,7 @@ export default function DashboardPage() {
               {/* Sidebar Content - Takes 1 column */}
               <div className="space-y-6">
                 <QuickActions />
-                <IssueMap />
+                <EnhancedMap />
               </div>
             </div>
           </div>

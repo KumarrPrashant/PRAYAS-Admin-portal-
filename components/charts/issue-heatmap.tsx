@@ -8,14 +8,14 @@ interface IssueHeatmapProps {
 }
 
 const heatmapData = [
-  { area: "Central Delhi", issues: 145, intensity: "high" },
-  { area: "South Delhi", issues: 98, intensity: "medium" },
-  { area: "North Delhi", issues: 132, intensity: "high" },
-  { area: "East Delhi", issues: 76, intensity: "medium" },
-  { area: "West Delhi", issues: 89, intensity: "medium" },
-  { area: "New Delhi", issues: 156, intensity: "high" },
-  { area: "Dwarka", issues: 45, intensity: "low" },
-  { area: "Rohini", issues: 67, intensity: "medium" },
+  { area: "Vaishali Colony", issues: 145, intensity: "high" },
+  { area: "Kaushambi", issues: 98, intensity: "medium" },
+  { area: "Raj Nagar Extension", issues: 132, intensity: "high" },
+  { area: "Indirapuram", issues: 76, intensity: "medium" },
+  { area: "Crossings Republik", issues: 89, intensity: "medium" },
+  { area: "Govindpuram", issues: 156, intensity: "high" },
+  { area: "Mohan Nagar", issues: 45, intensity: "low" },
+  { area: "Sahibabad", issues: 67, intensity: "medium" },
 ]
 
 const intensityColors = {

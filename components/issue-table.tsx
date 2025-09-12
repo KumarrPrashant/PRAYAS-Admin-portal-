@@ -1,9 +1,12 @@
 "use client"
 
+import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { MapPin, Clock, User, Eye, List, Search } from "lucide-react"
+import { TableViewControls } from "@/components/table-view-controls"
+import { ExcelExport } from "@/components/excel-export"
 
 interface IssueTableProps {
   searchQuery: string
@@ -19,11 +22,11 @@ const mockIssues = [
     id: "ISS-001",
     title: "Broken Street Light on MG Road",
     description: "Street light pole damaged, causing safety concerns for pedestrians during night hours",
-    location: "MG Road, Sector 15, New Delhi",
+    location: "MG Road, Sector 15, Ghaziabad",
     priority: "High",
     status: "In Progress",
     category: "Infrastructure",
-    reportedBy: "Rajesh Kumar",
+    reportedBy: "Prabhat",
     reporterPhone: "+91 98765 43210",
     timeAgo: "2 hours ago",
     assignedTo: "PWD Team A",
@@ -33,11 +36,11 @@ const mockIssues = [
     id: "ISS-002",
     title: "Water Logging in Residential Area",
     description: "Severe water logging after recent rainfall, affecting daily commute and causing health hazards",
-    location: "Green Park Colony, Block C",
+    location: "Vaishali Colony, Sector 4, Ghaziabad",
     priority: "Critical",
     status: "Pending",
     category: "Drainage",
-    reportedBy: "Priya Sharma",
+    reportedBy: "Prashant",
     reporterPhone: "+91 87654 32109",
     timeAgo: "4 hours ago",
     assignedTo: "Unassigned",
@@ -47,11 +50,11 @@ const mockIssues = [
     id: "ISS-003",
     title: "Garbage Collection Delay",
     description: "Garbage not collected for 3 days, causing hygiene issues and bad odor in the locality",
-    location: "Nehru Nagar, Ward 12",
+    location: "Kaushambi, Sector 12, Ghaziabad",
     priority: "Medium",
     status: "Assigned",
     category: "Sanitation",
-    reportedBy: "Amit Singh",
+    reportedBy: "Mridul",
     reporterPhone: "+91 76543 21098",
     timeAgo: "6 hours ago",
     assignedTo: "Sanitation Dept",
@@ -61,11 +64,11 @@ const mockIssues = [
     id: "ISS-004",
     title: "Pothole on Main Highway",
     description: "Large pothole causing vehicle damage and traffic congestion during peak hours",
-    location: "NH-1, Near Metro Station",
+    location: "NH-24, Near Anand Vihar, Ghaziabad",
     priority: "High",
     status: "In Progress",
     category: "Roads",
-    reportedBy: "Sunita Devi",
+    reportedBy: "Pratham",
     reporterPhone: "+91 65432 10987",
     timeAgo: "8 hours ago",
     assignedTo: "Road Maintenance",
@@ -75,11 +78,11 @@ const mockIssues = [
     id: "ISS-005",
     title: "Power Outage in Commercial Area",
     description: "Frequent power cuts affecting businesses and causing economic losses",
-    location: "Connaught Place, Central Delhi",
+    location: "Raj Nagar Extension, Ghaziabad",
     priority: "Critical",
     status: "Resolved",
     category: "Electricity",
-    reportedBy: "Vikram Gupta",
+    reportedBy: "Pragati",
     reporterPhone: "+91 54321 09876",
     timeAgo: "1 day ago",
     assignedTo: "Electricity Board",
@@ -109,6 +112,8 @@ export function IssueTable({
   onSelectIssue,
   selectedIssue,
 }: IssueTableProps) {
+  const [currentView, setCurrentView] = useState("table")
+
   // Filter issues based on search and filters
   const filteredIssues = mockIssues.filter((issue) => {
     const matchesSearch =
@@ -125,120 +130,131 @@ export function IssueTable({
   })
 
   return (
-    <Card className="border-border/50 shadow-sm">
-      <CardHeader className="pb-4">
-        <CardTitle className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="p-2 bg-primary/10 rounded-xl">
-              <List className="w-5 h-5 text-primary" />
-            </div>
-            <div>
-              <span className="text-xl font-serif">Issues Overview</span>
-              <p className="text-sm text-muted-foreground font-normal">
-                {filteredIssues.length} of {mockIssues.length} issues
-              </p>
-            </div>
-          </div>
-          <Badge variant="outline" className="px-3 py-1 rounded-lg border-primary/20">
-            {filteredIssues.length} results
-          </Badge>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {filteredIssues.map((issue, index) => (
-          <div
-            key={issue.id}
-            className={`border border-border/50 rounded-xl p-6 space-y-4 cursor-pointer transition-all duration-300 hover:shadow-md card-hover ${
-              selectedIssue === issue.id ? "bg-primary/5 border-primary shadow-md" : "hover:bg-muted/30"
-            }`}
-            onClick={() => onSelectIssue(issue.id)}
-            style={{ animationDelay: `${index * 50}ms` }}
-          >
-            <div className="flex items-start justify-between">
-              <div className="space-y-2 flex-1">
-                <div className="flex items-center space-x-3">
-                  <h4 className="font-serif font-semibold text-lg text-foreground">{issue.title}</h4>
-                  <Badge className={priorityColors[issue.priority as keyof typeof priorityColors]}>
-                    {issue.priority}
-                  </Badge>
-                </div>
-                <p className="text-muted-foreground leading-relaxed line-clamp-2">{issue.description}</p>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Badge className={statusColors[issue.status as keyof typeof statusColors]}>{issue.status}</Badge>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="rounded-lg border-border/50 hover:border-primary bg-transparent"
-                >
-                  <Eye className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <TableViewControls onViewChange={setCurrentView} currentView={currentView} />
+        </div>
+        <div>
+          <ExcelExport />
+        </div>
+      </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm">
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3 text-muted-foreground">
-                  <div className="p-1 bg-muted/50 rounded-lg">
-                    <MapPin className="w-4 h-4" />
-                  </div>
-                  <span className="font-medium">{issue.location}</span>
-                </div>
-                <div className="flex items-center space-x-3 text-muted-foreground">
-                  <div className="p-1 bg-muted/50 rounded-lg">
-                    <User className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="font-medium">{issue.reportedBy}</span>
-                    <span className="text-xs ml-2 opacity-70">({issue.reporterPhone})</span>
-                  </div>
-                </div>
+      <Card className="border-border/50 shadow-sm">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-primary/10 rounded-xl">
+                <List className="w-5 h-5 text-primary" />
               </div>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3 text-muted-foreground">
-                  <div className="p-1 bg-muted/50 rounded-lg">
-                    <Clock className="w-4 h-4" />
+              <div>
+                <span className="text-xl font-serif">Issues Overview</span>
+                <p className="text-sm text-muted-foreground font-normal">
+                  {filteredIssues.length} of {mockIssues.length} issues
+                </p>
+              </div>
+            </div>
+            <Badge variant="outline" className="px-3 py-1 rounded-lg border-primary/20">
+              {filteredIssues.length} results
+            </Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {filteredIssues.map((issue, index) => (
+            <div
+              key={issue.id}
+              className={`border border-border/50 rounded-xl p-6 space-y-4 cursor-pointer transition-all duration-300 hover:shadow-md card-hover ${
+                selectedIssue === issue.id ? "bg-primary/5 border-primary shadow-md" : "hover:bg-muted/30"
+              }`}
+              onClick={() => onSelectIssue(issue.id)}
+              style={{ animationDelay: `${index * 50}ms` }}
+            >
+              <div className="flex items-start justify-between">
+                <div className="space-y-2 flex-1">
+                  <div className="flex items-center space-x-3">
+                    <h4 className="font-serif font-semibold text-lg text-foreground">{issue.title}</h4>
+                    <Badge className={priorityColors[issue.priority as keyof typeof priorityColors]}>
+                      {issue.priority}
+                    </Badge>
                   </div>
-                  <span className="font-medium">{issue.timeAgo}</span>
+                  <p className="text-muted-foreground leading-relaxed line-clamp-2">{issue.description}</p>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <span className="text-muted-foreground font-medium">Assigned to:</span>
-                  <Badge variant="outline" className="rounded-lg border-border/50">
-                    {issue.assignedTo}
+                  <Badge className={statusColors[issue.status as keyof typeof statusColors]}>{issue.status}</Badge>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="rounded-lg border-border/50 hover:border-primary bg-transparent"
+                  >
+                    <Eye className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm">
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3 text-muted-foreground">
+                    <div className="p-1 bg-muted/50 rounded-lg">
+                      <MapPin className="w-4 h-4" />
+                    </div>
+                    <span className="font-medium">{issue.location}</span>
+                  </div>
+                  <div className="flex items-center space-x-3 text-muted-foreground">
+                    <div className="p-1 bg-muted/50 rounded-lg">
+                      <User className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="font-medium">{issue.reportedBy}</span>
+                      <span className="text-xs ml-2 opacity-70">({issue.reporterPhone})</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3 text-muted-foreground">
+                    <div className="p-1 bg-muted/50 rounded-lg">
+                      <Clock className="w-4 h-4" />
+                    </div>
+                    <span className="font-medium">{issue.timeAgo}</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <span className="text-muted-foreground font-medium">Assigned to:</span>
+                    <Badge variant="outline" className="rounded-lg border-border/50">
+                      {issue.assignedTo}
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-4 border-t border-border/50">
+                <div className="flex items-center space-x-3">
+                  <Badge variant="outline" className="rounded-lg border-primary/20 text-primary">
+                    {issue.category}
                   </Badge>
+                  <div className="flex items-center space-x-2 text-muted-foreground">
+                    <div className="w-2 h-2 bg-chart-2 rounded-full"></div>
+                    <span className="text-sm font-medium">{issue.images} photos</span>
+                  </div>
                 </div>
+                <div className="text-sm text-muted-foreground font-mono">ID: {issue.id}</div>
               </div>
             </div>
+          ))}
 
-            <div className="flex items-center justify-between pt-4 border-t border-border/50">
-              <div className="flex items-center space-x-3">
-                <Badge variant="outline" className="rounded-lg border-primary/20 text-primary">
-                  {issue.category}
-                </Badge>
-                <div className="flex items-center space-x-2 text-muted-foreground">
-                  <div className="w-2 h-2 bg-chart-2 rounded-full"></div>
-                  <span className="text-sm font-medium">{issue.images} photos</span>
-                </div>
+          {filteredIssues.length === 0 && (
+            <div className="text-center py-12 space-y-4">
+              <div className="w-16 h-16 bg-muted/50 rounded-2xl flex items-center justify-center mx-auto">
+                <Search className="w-8 h-8 text-muted-foreground" />
               </div>
-              <div className="text-sm text-muted-foreground font-mono">ID: {issue.id}</div>
+              <div>
+                <p className="text-lg font-medium text-foreground">No issues found</p>
+                <p className="text-muted-foreground">
+                  Try adjusting your filters or search query to find what you're looking for.
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
-
-        {filteredIssues.length === 0 && (
-          <div className="text-center py-12 space-y-4">
-            <div className="w-16 h-16 bg-muted/50 rounded-2xl flex items-center justify-center mx-auto">
-              <Search className="w-8 h-8 text-muted-foreground" />
-            </div>
-            <div>
-              <p className="text-lg font-medium text-foreground">No issues found</p>
-              <p className="text-muted-foreground">
-                Try adjusting your filters or search query to find what you're looking for.
-              </p>
-            </div>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   )
 }
