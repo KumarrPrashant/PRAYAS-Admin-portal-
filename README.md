@@ -7,7 +7,4 @@
 
 ## Deployment
 
-Your project is live at:
-
-**[https://vercel.com/praashant-kumars-projects/v0-jan-connect-dashboard](https://vercel.com/praashant-kumars-projects/v0-jan-connect-dashboard)**
-
+Your project is live at: vercel
